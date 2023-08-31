@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Horario Escolar',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
+        useMaterial3: true,
       ),
       home: const MyHomePage(),
     );
@@ -52,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Horario Escolar'),
+          title: const Text('Horario IINF 7°'),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Lunes'),
@@ -77,32 +78,122 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildHorarioTab(String day) {
-  return FutureBuilder<Map<String, dynamic>>(
-    future: _loadHorarioAsset(),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const CircularProgressIndicator();
-      } else if (snapshot.hasError) {
-        return const Text('Error al cargar los datos');
-      } else if (!snapshot.hasData) {
-        return const Text('No hay datos disponibles');
-      } else {
-        List<Map<String, dynamic>> horarioData = List<Map<String, dynamic>>.from(snapshot.data!['horario']);
-        List<Map<String, dynamic>> dayData = horarioData.where((item) => item[day] != null).toList();
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _loadHorarioAsset(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return const Text('Error al cargar los datos');
+        } else if (!snapshot.hasData) {
+          return const Text('No hay datos disponibles');
+        } else {
+          List<Map<String, dynamic>> horarioData =
+              List<Map<String, dynamic>>.from(snapshot.data!['horario']);
+          List<Map<String, dynamic>> dayData =
+              horarioData.where((item) => item[day] != null).toList();
 
-        return ListView.builder(
-          itemCount: dayData.length,
-          itemBuilder: (context, index) {
+          return ListView.builder(
+            itemCount: dayData.length,
+            itemBuilder: (context, index) {
+              /*
             return ListTile(
               title: Text(dayData[index][day]),
               //subtitle: Text('Aula: ${dayData[index]['aula $day']}'),
               subtitle: Text(dayData[index]['Horario']),
             );
-          },
-        );
-      }
-    },
-  );
-}
+            */
+              Color getChildColor(String content) {
+                if (content == 'Inglés N5') {
+                  return Colors.grey;
+                } else if (content == 'Servicio') {
+                  return Colors.cyan;
+                } else if (content == 'Prog. En Amb. C/S') {
+                  return Colors.lime;
+                } else if (content == 'Desarrollo de APL Móviles') {
+                  return Colors.green;
+                } else if (content == 'Desarrollo de APL Web II') {
+                  return Colors.deepPurple;
+                } else if (content == 'Seguridad Informática') {
+                  return Colors.teal;
+                } else if (content == 'Tópicos de BD') {
+                  return Colors.indigo;
+                } else if (content == 'Hora Libre') {
+                  return Colors.red;
+                } else if (content == 'Comida :3') {
+                  return Colors.pinkAccent;
+                }
+                return Colors.transparent;
+              }
 
+              return Container(
+                  color: getChildColor(dayData[index][day]).withOpacity(0.4),                  
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween, // Alinea los elementos al principio y al final
+                    //crossAxisAlignment: CrossAxisAlignment.center, // Alinea los elementos verticalmente en el centro
+                    children: [
+                      Container(
+                        /*
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    */
+                        padding: const EdgeInsets.all(16),
+                        child: Text(dayData[index]['Horario']),
+                      ),
+                      Expanded(
+                        child: Container(
+                          /*
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      */
+                          padding: const EdgeInsets.all(16),
+                          child: Text(dayData[index][day]),
+                        ),
+                      ),
+                      Container(
+                        /*
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    */
+                        padding: const EdgeInsets.all(16),
+                        child: Text('${dayData[index]['aula $day']}'),
+                      ),
+                    ],
+                  ));
+            },
+          );
+        }
+      },
+    );
+  }
 }
