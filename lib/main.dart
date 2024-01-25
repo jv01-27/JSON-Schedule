@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Horario Escolar',
+      title: 'Horario - 8° Semestre',
       theme: ThemeData(
         primarySwatch: Colors.red,
         useMaterial3: true,
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Horario IINF 7°'),
+          title: const Text('Horario IINF 8°'),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Lunes'),
@@ -104,19 +104,19 @@ class _MyHomePageState extends State<MyHomePage> {
             );
             */
               Color getChildColor(String content) {
-                if (content == 'Inglés N5') {
+                if (content == 'Cómputo en la Nube') {
                   return Colors.grey;
                 } else if (content == 'Servicio') {
                   return Colors.cyan;
-                } else if (content == 'Prog. En Amb. C/S') {
+                } else if (content == 'Tecnologías Emergentes') {
                   return Colors.lime;
-                } else if (content == 'Desarrollo de APL Móviles') {
+                } else if (content == 'Desarrollo de App Móviles II') {
                   return Colors.green;
-                } else if (content == 'Desarrollo de APL Web II') {
+                } else if (content == 'Inteligencia de Negocios') {
                   return Colors.deepPurple;
-                } else if (content == 'Seguridad Informática') {
+                } else if (content == 'Ciberseguridad') {
                   return Colors.teal;
-                } else if (content == 'Tópicos de BD') {
+                } else if (content == 'Taller de Investigación II') {
                   return Colors.indigo;
                 } else if (content == 'Hora Libre') {
                   return Colors.red;
@@ -186,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     */
                         padding: const EdgeInsets.all(16),
-                        child: Text('${dayData[index]['aula $day']}'),
+                        child: Text('${dayData[index]['aula$day']}'),
                       ),
                     ],
                   ));
